@@ -76,7 +76,7 @@ if __name__ == '__main__':
             img_data2 = f.read()
         body['data']['image1'] = base64.b64encode(img_data1).decode('utf-8')
         body['data']['image2'] = base64.b64encode(img_data2).decode('utf-8')
-    if cate=="face_features":
+    elif cate=="face_features":
         url = host+'/face2/features'
         with open(filepath, 'rb') as f:
             img_data = f.read()
