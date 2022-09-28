@@ -1,0 +1,45 @@
+
+# HTTP 服务端参数
+API:
+    Port: 5000
+    Addr: 0.0.0.0
+    SM2PrivateKey: "vK3iPBFMwKvXfS6QG3s0fKNPjGnLy90VI+PI0kzQ3o0=" # SM2私钥
+    AppIdSecret: { # 接口调用分配的 appid 和 sevret
+        "3EA25569454745D01219080B779F021F" : "41DF0E6AE27B5282C07EF5124642A352",
+    }
+    RequestTimestampDiff: 300 # api请求timestamp与服务器时间差异(秒)，大于差异绝对值将被拒绝
+
+# 推理服务队列的参数
+Server:
+    RedisServer: "127.0.0.1:7480"
+    RedisPasswd: "e18ffb7484f4d69c2acb40008471a71c"
+    QueueName: "go-arcface-synchronous-asynchronous-queue"
+    RequestQueueAmount: 1 # 请求队列数量，要启动相同数量的server
+    MessageTimeout: 10 # 推理计算最大等待时间
+    MaxWorkers: 8 # 模型推理最大并发数
+
+ErrCode:
+    QueueTimeout: { "code": 9997, "msg": "消息队列超时" }
+    UnknownApi: { "code": 9900, "msg": "未知的API" }
+    InferFail: { "code": 9998, "msg": "模型推理失败" }
+    ApiEntryFail: { "code": 9701, "msg": "API参数处理失败" }
+    SendMsgFail: { "code": 9702, "msg": "发送队列消息失败" }
+    RecvMsgFail: { "code": 9703, "msg": "接收队列消息失败" }
+    UnknownApiPath: { "code": 9709, "msg": "未知的API路径" }
+
+    SignFail: { "code": 9800, "msg": "验签失败" }
+    SignFail1: { "code": 9801, "msg": "缺少参数" }
+    SignFail2: { "code": 9802, "msg": "时间戳错误" }
+    SignFail3: { "code": 9803, "msg": "签名算法错误" }
+    SignFail5: { "code": 9805, "msg": "AppId错误" }
+    SignFail6: { "code": 9806, "msg": "版本号错误" }
+
+# 自定义参数
+Customer: { # 以下 key-value 为用户自定义使用
+    "ArcfaceModelPath" : "../../cv/face_model/arcface/models/buffalo_l", # buffalo_l 的路径
+    "FACE_MAX_IMAGE_SIZE" : "3145728", # 图片文件最大 3MB
+    "FACE_SAVE_IMAGE" : "1", # 是否保存请求的图片和结果：0 不保存存， 1 保存
+    "FACE_SAVE_IMAGE_PATH" : "data/tmp", # 保存的路径 
+    "FACE_DistanceThreshold" : "-0.27", # 余弦距离 比较 threshold
+    "FACE_WARM_UP_IMAGES" : "data/warmup", # 启动时模型热身的图片
+}
